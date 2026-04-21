@@ -27,15 +27,20 @@ class IPTVManager:
 
     def save_country_playlist_to_txt(self, country: str, filename: str | None = None) -> Path:
         playlist = self.load_playlist(country)
-        return self.exporter.export_playlist_readable(playlist, filename=filename)
-
-    def save_country_as_m3u_blocks_txt(self, country: str, filename: str | None = None) -> Path:
-        playlist = self.load_playlist(country)
         safe_name = country.lower().replace(" ", "_")
         return self.exporter.export_m3u_blocks(
             playlist.channels,
-            filename=filename or f"{safe_name}_m3u_blocks.txt",
+            filename=filename or f"{safe_name}_channels.txt",
         )
+
+    def save_country_as_m3u_blocks_txt(self, country: str, filename: str | None = None) -> Path:
+        return self.save_country_playlist_to_txt(country=country, filename=filename)
+
+    def save_all_countries_playlists_to_txt(self) -> list[Path]:
+        paths: list[Path] = []
+        for country in self.list_countries():
+            paths.append(self.save_country_playlist_to_txt(country))
+        return paths
 
     def search_channels(self, country: str, query: str) -> list[ChannelEntry]:
         playlist = self.load_playlist(country)

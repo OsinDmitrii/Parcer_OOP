@@ -17,16 +17,24 @@ def build_parser() -> argparse.ArgumentParser:
     countries_save = subparsers.add_parser("countries-save", help="Сохранить список стран в TXT")
     countries_save.add_argument("--filename", default="countries.txt")
 
-    export_country = subparsers.add_parser("export-country", help="Сохранить читаемый TXT по стране")
+    export_country = subparsers.add_parser(
+        "export-country",
+        help="Сохранить каналы страны в M3U-структуре (#EXTM3U + #EXTINF/URL)",
+    )
     export_country.add_argument("country")
     export_country.add_argument("--filename", default=None)
 
     export_country_blocks = subparsers.add_parser(
         "export-country-blocks",
-        help="Сохранить каналы страны как читаемые M3U-блоки в TXT",
+        help="Алиас export-country: сохранить каналы страны в M3U-структуре",
     )
     export_country_blocks.add_argument("country")
     export_country_blocks.add_argument("--filename", default=None)
+
+    subparsers.add_parser(
+        "export-all-countries",
+        help="Сохранить каналы всех стран в M3U-структуре (*_channels.txt)",
+    )
 
     groups = subparsers.add_parser("groups", help="Показать группы каналов по стране")
     groups.add_argument("country")
@@ -65,6 +73,12 @@ def main() -> None:
     if args.command == "export-country-blocks":
         path = manager.save_country_as_m3u_blocks_txt(args.country, filename=args.filename)
         print(f"Сохранено: {path}")
+        return
+
+    if args.command == "export-all-countries":
+        paths = manager.save_all_countries_playlists_to_txt()
+        for path in paths:
+            print(f"Сохранено: {path}")
         return
 
     if args.command == "groups":

@@ -7,8 +7,8 @@ Python-проект ООП для работы с репозиторием `Free
 - получить список всех доступных стран;
 - сохранить список стран в `txt`;
 - скачать и распарсить плейлист конкретной страны;
-- сохранить каналы страны в читаемый `txt`;
-- сохранить каналы в виде блоков `#EXTINF + URL`, разделённых пустой строкой;
+- сохранить каналы страны в M3U-структуре: `#EXTM3U`, далее блоки `#EXTINF + URL`;
+- сохранить каналы сразу для всех стран в тот же формат;
 - искать каналы по названию и группе;
 - получать статистику по каналам и группам.
 
@@ -32,31 +32,37 @@ python main.py countries
 python main.py countries-save
 ```
 
-### 3. Сохранить читаемый txt по стране
+### 3. Сохранить M3U-структуру по стране
 
 ```bash
 python main.py export-country "Spain"
 ```
 
-### 4. Сохранить m3u-блоки по стране
+### 4. Алиас той же команды
 
 ```bash
 python main.py export-country-blocks "Spain"
 ```
 
-### 5. Показать группы каналов
+### 5. Экспорт для всех стран
+
+```bash
+python main.py export-all-countries
+```
+
+### 6. Показать группы каналов
 
 ```bash
 python main.py groups "Spain"
 ```
 
-### 6. Поиск канала
+### 7. Поиск канала
 
 ```bash
 python main.py search "Spain" news
 ```
 
-### 7. Статистика по стране
+### 8. Статистика по стране
 
 ```bash
 python main.py stats "Spain"
@@ -69,6 +75,7 @@ python main.py countries
 python main.py countries-save
 python main.py export-country "Spain"
 python main.py export-country-blocks "Spain"
+python main.py export-all-countries
 python main.py groups "Spain"
 python main.py search "Spain" news
 python main.py stats "Spain"

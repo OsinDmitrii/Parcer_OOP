@@ -42,7 +42,7 @@ class TXTExporter:
         self, channels: Iterable[ChannelEntry], filename: str
     ) -> Path:
         path = self.output_dir / filename
-        blocks = []
+        blocks = ["#EXTM3U", ""]
         for channel in channels:
             blocks.append(channel.to_m3u_block())
             blocks.append("")
